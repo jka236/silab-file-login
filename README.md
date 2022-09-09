@@ -1,4 +1,4 @@
-# silab-login
+# silab-file-based-login
 
 ## Prerequisites
 - Python3
