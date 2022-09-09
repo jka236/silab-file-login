@@ -1,8 +1,5 @@
 #!/bin/sh
 
-export FLASK_APP=project
-export FLASK_DEBUG=1
-
 VENV=$(dirname "${BASH_SOURCE[0]}")/venv
 
 if [ ! -d "$VENV" ]; then
