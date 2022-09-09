@@ -1,0 +1,13 @@
+<!-- templates/myinfo.html -->
+
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">
+  Welcome,  {{ name }}
+</h1>
+<span  style="white-space: pre-line">
+  username: {{ name }}
+  email: {{ email }}
+</span>
+{% endblock %}
