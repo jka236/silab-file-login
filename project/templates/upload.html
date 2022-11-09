@@ -1,38 +1,70 @@
 <!-- templates/monitoring.html -->
 
-{% extends "base.html" %}
+{% extends "base.html" %} {% block content %}
 
-{% block content %}
-
-<h1 class="title">
-    Upload your file
-</h1>
-
+<h1 class="title">Upload your file</h1>
 
 <form method="post" action="/file_upload" enctype="multipart/form-data">
-    <dl>
-        <p>
-            <input type="file" name="file" autocomplete="off" required>
-        </p>
-    </dl>
+  <dl>
     <p>
-        <input type="submit" value="Submit">
+      <input type="file" name="file" autocomplete="off" required />
     </p>
+  </dl>
+  <p>
+    <input type="submit" value="Submit" />
+  </p>
 </form>
 
-<h3 style="margin-top: 50px;">
-    Uploaded files
-</h3>
+<h3 style="margin-top: 50px">Uploaded files</h3>
 
-<div style="width: 80%; margin:auto">
-{% for key, value in files.items() %}
-<form method="GET" action="{{ url_for('main.remove_file', file_name=key) }}">
-<div style="display: flex; justify-content:space-between; margin: 20px">
+<div style="width: 80%; margin: auto">
+  {% for key, value in files.items() %}
+
+  <div
+    style="
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 20px;
+    "
+  >
     <p class="inline">{{ value }}</p>
-    <button class="button">Remove</button>
-</div>
-</form>
-{% endfor %}
+
+    <div
+      style="display: flex; justify-content: space-between; align-items: center"
+    >
+      <form
+        method="POST"
+        action="{{url_for('main.att_update', file_name=key)}}"
+      >
+        <input
+          class="input"
+          type="update"
+          name="update"
+          placeholder="Update Attribute"
+          autofocus=""
+        />
+        <button class="button is-fullwidth">Update</button>
+      </form>
+
+      <div>
+        <a href="{{url_for('main.remove_file', file_name=key)}}">
+          <button class="button is-fullwidth">Remove</button>
+        </a>
+        <a href="{{url_for('main.download_file', file_name=key)}}">
+          <button class="button is-fullwidth">Download</button>
+        </a>
+      </div>
+    </div>
+  </div>
+  {% with messages = get_flashed_messages() %} {% if messages and
+  messages[0][key] %} {% if messages[0][key] == "success" %}
+  <div class="notification is-success" key="{{key}}">
+    {{ messages[0][key] }}
+  </div>
+  {% else %}
+  <div class="notification is-danger" key="{{key}}">{{ messages[0][key] }}</div>
+  {% endif %} {% endif %} {% endwith %} {% endfor %}
 </div>
 
 {% endblock %}
